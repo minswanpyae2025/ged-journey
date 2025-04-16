@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -18,6 +19,10 @@ import NotFound from "./pages/NotFound";
 // Dashboard Pages
 import DashboardLayout from "./pages/DashboardLayout";
 import DashboardHome from "./pages/DashboardHome";
+import ModulesPage from "./pages/ModulesPage";
+import AIAssistantPage from "./pages/AIAssistantPage";
+import ReferralsPage from "./pages/ReferralsPage";
+import SettingsPage from "./pages/SettingsPage";
 
 const queryClient = new QueryClient();
 
@@ -47,7 +52,11 @@ const App = () => (
           {/* Dashboard Routes */}
           <Route path="/dashboard" element={<DashboardLayout />}>
             <Route index element={<DashboardHome />} />
-            {/* Other dashboard routes will be added as they're implemented */}
+            <Route path="modules" element={<ModulesPage />} />
+            <Route path="modules/:moduleId" element={<ModulesPage />} />
+            <Route path="ai-assistant" element={<AIAssistantPage />} />
+            <Route path="referrals" element={<ReferralsPage />} />
+            <Route path="settings" element={<SettingsPage />} />
           </Route>
           
           {/* Catch-all route */}
