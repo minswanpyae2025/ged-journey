@@ -6,6 +6,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
 
+// Define a union type for subscriptions
+type SubscriptionType = 'Basic Learner' | 'Smart Learner' | 'Guided Genius';
+
 export default function SettingsPage() {
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -19,7 +22,7 @@ export default function SettingsPage() {
   const userData = {
     name: 'Alex Johnson',
     email: 'alex.johnson@example.com',
-    subscription: 'Smart Learner' as const,
+    subscription: 'Smart Learner' as SubscriptionType,
     expiryDate: '2025-05-15'
   };
   
