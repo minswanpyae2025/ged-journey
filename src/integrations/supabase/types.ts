@@ -74,6 +74,92 @@ export type Database = {
         }
         Relationships: []
       }
+      profiles: {
+        Row: {
+          bonus_days: number | null
+          created_at: string
+          full_name: string | null
+          id: string
+          subscription_expiry: string | null
+          subscription_type: string
+        }
+        Insert: {
+          bonus_days?: number | null
+          created_at?: string
+          full_name?: string | null
+          id: string
+          subscription_expiry?: string | null
+          subscription_type?: string
+        }
+        Update: {
+          bonus_days?: number | null
+          created_at?: string
+          full_name?: string | null
+          id?: string
+          subscription_expiry?: string | null
+          subscription_type?: string
+        }
+        Relationships: []
+      }
+      referrals: {
+        Row: {
+          bonus_granted: boolean | null
+          created_at: string | null
+          id: string
+          referred_email: string
+          referrer_id: string
+          status: string | null
+        }
+        Insert: {
+          bonus_granted?: boolean | null
+          created_at?: string | null
+          id?: string
+          referred_email: string
+          referrer_id: string
+          status?: string | null
+        }
+        Update: {
+          bonus_granted?: boolean | null
+          created_at?: string | null
+          id?: string
+          referred_email?: string
+          referrer_id?: string
+          status?: string | null
+        }
+        Relationships: []
+      }
+      user_module_progress: {
+        Row: {
+          id: string
+          last_accessed: string | null
+          module_id: string
+          progress: number | null
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          last_accessed?: string | null
+          module_id: string
+          progress?: number | null
+          user_id: string
+        }
+        Update: {
+          id?: string
+          last_accessed?: string | null
+          module_id?: string
+          progress?: number | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_module_progress_module_id_fkey"
+            columns: ["module_id"]
+            isOneToOne: false
+            referencedRelation: "modules"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_progress: {
         Row: {
           completed_at: string | null

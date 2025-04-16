@@ -1,9 +1,9 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { AuthProvider } from "@/contexts/AuthContext";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 
@@ -36,34 +36,36 @@ const PublicLayout = ({ children }: { children: React.ReactNode }) => (
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          {/* Public Routes */}
-          <Route path="/" element={<PublicLayout><HomePage /></PublicLayout>} />
-          <Route path="/how-it-works" element={<PublicLayout><HowItWorksPage /></PublicLayout>} />
-          <Route path="/pricing" element={<PublicLayout><PricingPage /></PublicLayout>} />
-          <Route path="/faq" element={<PublicLayout><FAQPage /></PublicLayout>} />
-          <Route path="/contact" element={<PublicLayout><ContactPage /></PublicLayout>} />
-          <Route path="/login" element={<LoginPage />} />
-          
-          {/* Dashboard Routes */}
-          <Route path="/dashboard" element={<DashboardLayout />}>
-            <Route index element={<DashboardHome />} />
-            <Route path="modules" element={<ModulesPage />} />
-            <Route path="modules/:moduleId" element={<ModulesPage />} />
-            <Route path="ai-assistant" element={<AIAssistantPage />} />
-            <Route path="referrals" element={<ReferralsPage />} />
-            <Route path="settings" element={<SettingsPage />} />
-          </Route>
-          
-          {/* Catch-all route */}
-          <Route path="*" element={<PublicLayout><NotFound /></PublicLayout>} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
+    <BrowserRouter>
+      <AuthProvider>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <Routes>
+            {/* Public Routes */}
+            <Route path="/" element={<PublicLayout><HomePage /></PublicLayout>} />
+            <Route path="/how-it-works" element={<PublicLayout><HowItWorksPage /></PublicLayout>} />
+            <Route path="/pricing" element={<PublicLayout><PricingPage /></PublicLayout>} />
+            <Route path="/faq" element={<PublicLayout><FAQPage /></PublicLayout>} />
+            <Route path="/contact" element={<PublicLayout><ContactPage /></PublicLayout>} />
+            <Route path="/login" element={<LoginPage />} />
+            
+            {/* Dashboard Routes */}
+            <Route path="/dashboard" element={<DashboardLayout />}>
+              <Route index element={<DashboardHome />} />
+              <Route path="modules" element={<ModulesPage />} />
+              <Route path="modules/:moduleId" element={<ModulesPage />} />
+              <Route path="ai-assistant" element={<AIAssistantPage />} />
+              <Route path="referrals" element={<ReferralsPage />} />
+              <Route path="settings" element={<SettingsPage />} />
+            </Route>
+            
+            {/* Catch-all route */}
+            <Route path="*" element={<PublicLayout><NotFound /></PublicLayout>} />
+          </Routes>
+        </TooltipProvider>
+      </AuthProvider>
+    </BrowserRouter>
   </QueryClientProvider>
 );
 
