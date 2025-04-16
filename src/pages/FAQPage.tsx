@@ -1,5 +1,7 @@
-
+import React from 'react';
+import { Link } from 'react-router-dom';
 import PageHeader from '@/components/PageHeader';
+import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 export default function FAQPage() {
@@ -135,6 +137,3 @@ export default function FAQPage() {
     </div>
   );
 }
-
-// Import the Button component
-import { Button } from "@/components/ui/button";
