@@ -1,15 +1,18 @@
-
 import PageHeader from '@/components/PageHeader';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Check, Zap, BookOpen, Brain, MessageSquare, Mail } from 'lucide-react';
+import { useState } from 'react';
 
 export default function PricingPage() {
+  const [billingPeriod, setBillingPeriod] = useState<'monthly' | 'annual'>('monthly');
+
   const plans = [
     {
       name: "Basic Learner",
-      price: "$9.99",
-      period: "per month",
+      monthlyPrice: "20,000",
+      annualPrice: "192,000",
+      period: billingPeriod === 'monthly' ? "per month" : "per year",
       description: "Essential resources for GED preparation",
       icon: <BookOpen className="h-12 w-12 text-ged-blue" />,
       features: [
@@ -28,8 +31,9 @@ export default function PricingPage() {
     },
     {
       name: "Smart Learner",
-      price: "$19.99",
-      period: "per month",
+      monthlyPrice: "30,000",
+      annualPrice: "288,000",
+      period: billingPeriod === 'monthly' ? "per month" : "per year",
       description: "Enhanced learning with progress tracking",
       icon: <Zap className="h-12 w-12 text-ged-purple" />,
       features: [
@@ -47,8 +51,9 @@ export default function PricingPage() {
     },
     {
       name: "Guided Genius",
-      price: "$29.99",
-      period: "per month",
+      monthlyPrice: "40,000",
+      annualPrice: "384,000",
+      period: billingPeriod === 'monthly' ? "per month" : "per year",
       description: "Premium experience with AI assistance",
       icon: <Brain className="h-12 w-12 text-ged-green" />,
       features: [
@@ -71,8 +76,36 @@ export default function PricingPage() {
         <div className="container-content">
           <PageHeader 
             title="Choose Your Learning Plan" 
-            description="Select the subscription that fits your learning needs. All plans are billed monthly with no long-term commitment."
+            description="Select the subscription that fits your learning needs. All plans include our core GED preparation materials."
           />
+
+          <div className="flex justify-center mb-8">
+            <div className="inline-flex items-center bg-muted rounded-lg p-1">
+              <button
+                onClick={() => setBillingPeriod('monthly')}
+                className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+                  billingPeriod === 'monthly' 
+                    ? 'bg-white shadow text-primary' 
+                    : 'text-muted-foreground hover:bg-white/50'
+                }`}
+              >
+                Monthly
+              </button>
+              <button
+                onClick={() => setBillingPeriod('annual')}
+                className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+                  billingPeriod === 'annual' 
+                    ? 'bg-white shadow text-primary' 
+                    : 'text-muted-foreground hover:bg-white/50'
+                }`}
+              >
+                Annual
+                <span className="ml-1.5 inline-flex items-center rounded-full bg-green-100 px-2 py-0.5 text-xs font-medium text-green-800">
+                  Save 20%
+                </span>
+              </button>
+            </div>
+          </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
             {plans.map((plan, index) => (
@@ -92,10 +125,18 @@ export default function PricingPage() {
                   <div className="mx-auto mb-3">{plan.icon}</div>
                   <h3 className="text-2xl font-bold">{plan.name}</h3>
                   <div className="mt-3 mb-2">
-                    <span className="text-3xl font-bold">{plan.price}</span>
+                    <span className="text-3xl font-bold">
+                      {billingPeriod === 'monthly' ? plan.monthlyPrice : plan.annualPrice}
+                    </span>
+                    <span className="text-muted-foreground ml-1">MMK</span>
                     <span className="text-muted-foreground ml-1">{plan.period}</span>
                   </div>
-                  <p className="text-sm text-muted-foreground">{plan.description}</p>
+                  {billingPeriod === 'annual' && (
+                    <p className="text-sm text-green-600 font-medium">
+                      {`Save ${(Number(plan.monthlyPrice.replace(',', '')) * 2.4).toLocaleString()} MMK annually`}
+                    </p>
+                  )}
+                  <p className="text-sm text-muted-foreground mt-2">{plan.description}</p>
                 </div>
                 
                 <div className="p-6 flex-1">

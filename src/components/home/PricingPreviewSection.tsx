@@ -6,7 +6,7 @@ import { ArrowRight, Check } from 'lucide-react';
 const plans = [
   {
     name: "Basic Learner",
-    price: "$9.99",
+    price: "20,000",
     period: "per month",
     description: "Essential resources for GED preparation",
     features: [
@@ -21,7 +21,7 @@ const plans = [
   },
   {
     name: "Smart Learner",
-    price: "$19.99",
+    price: "30,000",
     period: "per month",
     description: "Enhanced learning with progress tracking",
     features: [
@@ -37,7 +37,7 @@ const plans = [
   },
   {
     name: "Guided Genius",
-    price: "$29.99",
+    price: "40,000",
     period: "per month",
     description: "Premium experience with AI assistance",
     features: [
