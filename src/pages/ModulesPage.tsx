@@ -7,6 +7,24 @@ import { useModules } from '@/hooks/useModules';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Skeleton } from '@/components/ui/skeleton';
 
+type VideoContent = {
+  url: string;
+};
+
+type ArticleContent = {
+  content: string;
+};
+
+type QuizQuestion = {
+  question: string;
+  options: string[];
+  correctAnswer?: number;
+};
+
+type QuizContent = {
+  questions: QuizQuestion[];
+};
+
 export default function ModulesPage() {
   const { moduleId } = useParams();
   const { data: modules, isLoading, error } = useModules(moduleId);
@@ -78,11 +96,11 @@ export default function ModulesPage() {
                   <CardTitle>{video.title}</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  {video.content && (
+                  {video.content && typeof video.content === 'object' && (
                     <div className="aspect-video">
                       <iframe 
                         className="w-full h-full rounded-md"
-                        src={video.content.url as string}
+                        src={(video.content as VideoContent).url}
                         title={video.title}
                         frameBorder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -104,7 +122,9 @@ export default function ModulesPage() {
                   <CardTitle>{article.title}</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p>{article.content?.content as string}</p>
+                  {article.content && typeof article.content === 'object' && (
+                    <p>{(article.content as ArticleContent).content}</p>
+                  )}
                 </CardContent>
               </Card>
             ))}
@@ -121,11 +141,14 @@ export default function ModulesPage() {
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
-                    {(quiz.content?.questions as any[] || []).map((question, idx) => (
+                    {quiz.content && typeof quiz.content === 'object' && 
+                     (quiz.content as QuizContent).questions && 
+                     Array.isArray((quiz.content as QuizContent).questions) && 
+                     (quiz.content as QuizContent).questions.map((question, idx) => (
                       <div key={idx} className="space-y-2">
                         <h3 className="font-medium">Question {idx + 1}: {question.question}</h3>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                          {question.options.map((option: string, optionIdx: number) => (
+                          {question.options.map((option, optionIdx) => (
                             <div key={optionIdx} className="flex items-center space-x-2">
                               <input 
                                 type="radio" 
