@@ -9,7 +9,110 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      module_content: {
+        Row: {
+          content: Json | null
+          created_at: string | null
+          id: string
+          module_id: string | null
+          order_index: number
+          title: string
+          type: string
+        }
+        Insert: {
+          content?: Json | null
+          created_at?: string | null
+          id?: string
+          module_id?: string | null
+          order_index: number
+          title: string
+          type: string
+        }
+        Update: {
+          content?: Json | null
+          created_at?: string | null
+          id?: string
+          module_id?: string | null
+          order_index?: number
+          title?: string
+          type?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "module_content_module_id_fkey"
+            columns: ["module_id"]
+            isOneToOne: false
+            referencedRelation: "modules"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      modules: {
+        Row: {
+          category: Database["public"]["Enums"]["module_category"]
+          created_at: string | null
+          description: string | null
+          id: string
+          order_index: number
+          title: string
+        }
+        Insert: {
+          category: Database["public"]["Enums"]["module_category"]
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          order_index: number
+          title: string
+        }
+        Update: {
+          category?: Database["public"]["Enums"]["module_category"]
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          order_index?: number
+          title?: string
+        }
+        Relationships: []
+      }
+      user_progress: {
+        Row: {
+          completed_at: string | null
+          content_id: string | null
+          id: string
+          module_id: string | null
+          user_id: string | null
+        }
+        Insert: {
+          completed_at?: string | null
+          content_id?: string | null
+          id?: string
+          module_id?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          completed_at?: string | null
+          content_id?: string | null
+          id?: string
+          module_id?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_progress_content_id_fkey"
+            columns: ["content_id"]
+            isOneToOne: false
+            referencedRelation: "module_content"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_progress_module_id_fkey"
+            columns: ["module_id"]
+            isOneToOne: false
+            referencedRelation: "modules"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
@@ -18,7 +121,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      module_category: "math" | "science" | "language_arts" | "social_studies"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -133,6 +236,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      module_category: ["math", "science", "language_arts", "social_studies"],
+    },
   },
 } as const
